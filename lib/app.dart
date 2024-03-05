@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:github_favourites/config/git_favouries_theme.dart';
 
 class GitFavouritesApp extends StatelessWidget {
   const GitFavouritesApp({super.key});
@@ -15,8 +16,15 @@ class GitFavouritesAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Center(
-        child: Text("Your favourites Git repos"),
+      themeMode: ThemeMode.light,
+      theme: GitFavouritesTheme().light,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Git Favourites"),
+        ),
+        body: Center(
+          child: Text("Your favourites Git repos"),
+        ),
       ),
     );
   }
