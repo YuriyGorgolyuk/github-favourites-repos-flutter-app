@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class GitFavouritesTheme {
-  Color background = const Color(0xFFF9F9F9);
+  static Color background = const Color(0xFFF9F9F9);
   // Layers
-  Color layerOne = const Color(0xFFF2F2F2);
+  static Color layerOne = const Color(0xFFF2F2F2);
 
   // accent colors
-  Color accentPrimary = const Color(0xFF1463F5);
-  Color accentSecondary = const Color(0xFFE5EDFF);
+  static Color accentPrimary = const Color(0xFF1463F5);
+  static Color accentSecondary = const Color(0xFFE5EDFF);
 
   // text colors
-  Color textPrimary = const Color(0xFF211814);
-  Color textSecondary = const Color(0xFFBFBFBF);
+  static Color textPrimary = const Color(0xFF211814);
+  static Color textSecondary = const Color(0xFFBFBFBF);
 
   // text styles
   static TextStyle mainTextStyle = const TextStyle(
@@ -31,7 +31,7 @@ class GitFavouritesTheme {
   );
 
   /// Returns the light theme for the app
-  ThemeData get light {
+  static ThemeData get light {
     ThemeData lightThemeData = ThemeData(
       scaffoldBackgroundColor: background,
       canvasColor: layerOne,

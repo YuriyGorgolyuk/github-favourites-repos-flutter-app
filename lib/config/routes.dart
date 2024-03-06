@@ -7,8 +7,8 @@ class AppRoutes {
   /// This is the default route that reserved for sign in page
   /// Commented because doesn't need for the test task
   // static const String signIn = '/';
-  static const String loading = '/';
-  static const String home = '/home';
+  static const String home = '/';
+  static const String loading = '/loading';
   static const String favouritesRepos = '/favourites-repos';
 
   static Map<String, WidgetBuilder> get routes => {
