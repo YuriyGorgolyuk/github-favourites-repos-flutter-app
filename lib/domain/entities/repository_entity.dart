@@ -47,6 +47,16 @@ class RepositoryEntity extends Equatable {
     );
   }
 
+  factory RepositoryEntity.fromJson(Map<String, dynamic> json) {
+    return RepositoryEntity(
+      name: json['name'] as String?,
+      id: json['id'] as int?,
+      fullName: json['full_name'] as String?,
+      htmlUrl: json['html_url'] as String?,
+      cloneUrl: json['clone_url'] as String?,
+    );
+  }
+
   @override
   List<Object?> get props => [name, id, fullName, htmlUrl, cloneUrl, isStarred];
 }

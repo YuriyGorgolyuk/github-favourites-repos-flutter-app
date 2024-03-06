@@ -36,7 +36,7 @@ class GitFavouritesApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => FavouritesListCubit(
-              repository: userRepository,
+              gitRepository: gitRepository,
             ),
           ),
         ],
@@ -81,12 +81,12 @@ class _GitFavouritesAppViewState extends State<GitFavouritesAppView> {
       builder: (context, child) {
         return BlocListener<GithubReposBloc, GithubReposState>(
           listener: (context, state) {
-            switch (state) {
-              case GithubReposInitial _:
+            switch (state.appStatus) {
+              case AppStatus.unauthenticated:
                 _navigatorKey.currentState!.pushReplacementNamed('/loading');
-              case GithubReposLoading _:
+              case AppStatus.initialisation:
                 _navigatorKey.currentState!.pushReplacementNamed('/loading');
-              case GithubReposLoaded _:
+              case AppStatus.authenticated:
                 _navigatorKey.currentState!.pushReplacementNamed('/');
                 break;
 

@@ -11,8 +11,11 @@ class GithubRepositoryImpl {
   final GithubRemoteDataSource remoteDataSource;
   final GithubLocalDataSource localDataSource;
 
-  Future<List<RepositoryEntity>> searchRepositoryByName(
-      {required String query}) async {
+  Future<List<RepositoryEntity>> searchRepositoryByName({
+    required String query,
+    int? resultsPerPage,
+    int? pageNumber,
+  }) async {
     var searchResults = await remoteDataSource.searchRepositoryByName(query);
 
     return searchResults;

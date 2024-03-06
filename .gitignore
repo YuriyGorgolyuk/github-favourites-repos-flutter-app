@@ -41,3 +41,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+# dot.env  // shoube added to .gitignore but for testing left it commented
