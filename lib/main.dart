@@ -8,6 +8,7 @@ import 'package:github_favourites/domain/repositories/github_favourites_reposito
 import 'package:github_favourites/domain/repositories/user_repository.dart';
 import 'package:github_favourites/presentation/app.dart';
 import 'package:github_favourites/presentation/bloc/bloc_observer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 typedef AppBuilder = Future<Widget> Function();
 
@@ -29,6 +30,7 @@ void main() {
   bootstrap(() async {
     GithubLocalDataSource githubLocalDataSource = GithubLocalDataSource();
     GithubRemoteDataSource githubClient = GithubClient();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     GithubRepositoryImpl githubRepository = GithubRepositoryImpl(
       remoteDataSource: githubClient,
@@ -37,6 +39,7 @@ void main() {
 
     UserRepository userRepository = UserRepository(
       localDataSource: githubLocalDataSource,
+      sharedPreferences: prefs,
     );
 
     return GitFavouritesApp(

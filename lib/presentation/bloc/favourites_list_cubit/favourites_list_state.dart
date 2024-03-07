@@ -14,5 +14,5 @@ final class FavouritesListState extends Equatable {
   final String message;
 
   @override
-  List<Object> get props => [favouriteRepos];
+  List<Object> get props => [status, favouriteRepos, message];
 }

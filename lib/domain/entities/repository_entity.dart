@@ -54,6 +54,7 @@ class RepositoryEntity extends Equatable {
       fullName: json['full_name'] as String?,
       htmlUrl: json['html_url'] as String?,
       cloneUrl: json['clone_url'] as String?,
+      isStarred: false,
     );
   }
 

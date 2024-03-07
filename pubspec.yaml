@@ -41,6 +41,8 @@ dependencies:
   dio: ^5.4.1
   http: ^1.2.1
   flutter_dotenv: ^5.1.0
+  flutter_svg: ^2.0.10+1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - dot.env
+    - assets/icons/actions/
+    - assets/icons/functional/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -8,6 +8,8 @@ enum SearchScreenStatus {
   loading,
   loadedSearchHistory,
   loadedSearchResult,
+  starred,
+  unstarred,
   error
 }
 
@@ -20,15 +22,17 @@ class GithubReposState extends Equatable {
     this.currentPage = 1,
     this.message = '',
     this.searchResults = const [],
+    this.query = '',
   });
-
-  final UserEntity user;
   final AppStatus appStatus;
   final SearchScreenStatus status;
+  final UserEntity user;
   final int resultsPerPage;
   final int currentPage;
   final String message;
   final List<RepositoryEntity> searchResults;
+
+  final String query;
 
   const GithubReposState.initial(UserEntity user)
       : this._(appStatus: AppStatus.unauthenticated, user: user);
@@ -41,6 +45,7 @@ class GithubReposState extends Equatable {
     int? currentPage,
     String? message,
     List<RepositoryEntity>? searchResults,
+    String? query,
   }) {
     return GithubReposState._(
       user: user ?? this.user,
@@ -50,6 +55,7 @@ class GithubReposState extends Equatable {
       currentPage: currentPage ?? this.currentPage,
       message: message ?? this.message,
       searchResults: searchResults ?? this.searchResults,
+      query: query ?? this.query,
     );
   }
 
@@ -61,6 +67,7 @@ class GithubReposState extends Equatable {
         resultsPerPage,
         currentPage,
         message,
-        searchResults
+        searchResults,
+        query,
       ];
 }

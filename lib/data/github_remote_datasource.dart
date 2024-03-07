@@ -16,14 +16,6 @@ abstract class GithubRemoteDataSource {
   });
 }
 
-final RepositoryEntity repo1 = RepositoryEntity(
-  name: 'repo1',
-  id: 1,
-  fullName: 'repo1',
-  htmlUrl: ' ',
-  cloneUrl: ' ',
-);
-
 List<RepositoryEntity> parseJsonInBackground(String responseBody) {
   final parsed = json.decode(responseBody);
   final items = parsed['items'] as List<dynamic>;
@@ -61,14 +53,14 @@ class GithubClient implements GithubRemoteDataSource {
 
   @override
   Future<RepositoryEntity> getGitById({required var repositoryId}) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return repo1;
+    // to implement fetch from github
+    return RepositoryEntity.empty;
   }
 
   @override
   Future<RepositoryEntity> updateGitRepository(
       {required RepositoryEntity gitRepository}) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 80));
     return gitRepository;
   }
 }

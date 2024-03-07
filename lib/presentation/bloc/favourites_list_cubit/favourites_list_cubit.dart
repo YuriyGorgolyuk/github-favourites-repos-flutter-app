@@ -22,7 +22,9 @@ class FavouritesListCubit extends Cubit<FavouritesListState> {
         repos.add(repo);
       }
       emit(FavouritesListState(
-          status: FavouritesListStatus.loaded, favouriteRepos: repos));
+        status: FavouritesListStatus.loaded,
+        favouriteRepos: repos,
+      ));
     } else {
       emit(const FavouritesListState(
         status: FavouritesListStatus.error,
