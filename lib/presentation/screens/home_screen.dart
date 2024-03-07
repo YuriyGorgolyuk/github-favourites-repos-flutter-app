@@ -210,6 +210,7 @@ class _SearchBarState extends State<SearchBar> {
         controller: controller,
         focusNode: focusNode,
         textAlignVertical: TextAlignVertical.center,
+        cursorColor: theme.colorScheme.primary,
         decoration: InputDecoration(
           hintText: hintText,
           errorText: helpText,

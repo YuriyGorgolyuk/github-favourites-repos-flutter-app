@@ -149,6 +149,8 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
     }
 
     /// a bit complex because selected solution for persistent can't handle entire object to store.
+    /// TODO: update data persisting solution to handle this better.
+    /// ex. Store data in JSON String in SharedPreferences or use Hive.
     if (state.user.favouriteReposIds.contains(event.repository.id)) {
       favouriteReposIds = state.user.favouriteReposIds;
       favouriteReposIds.remove(event.repository.id);

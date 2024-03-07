@@ -56,7 +56,6 @@ class GitFavouritesTheme {
       textTheme: TextTheme(
         titleLarge: mainTextStyle.copyWith(fontSize: 24),
         titleMedium: mainTextStyle,
-        bodyLarge: bodyTextStyle.copyWith(fontSize: 18),
         bodyMedium: bodyTextStyle,
       ),
       colorScheme: const ColorScheme.light(
@@ -68,7 +67,6 @@ class GitFavouritesTheme {
         background: layerOne,
         tertiary: textPlaceholder,
         error: Colors.red,
-        onError: Colors.red,
         onBackground: Colors.white,
         surface: Colors.white,
         onSurface: Colors.black,
@@ -79,19 +77,17 @@ class GitFavouritesTheme {
         filled: true,
         fillColor: layerOne,
         focusColor: accentSecondary,
-        labelStyle: bodyTextStyle.copyWith(),
         disabledBorder: outlineInputBorder,
+        hintStyle: bodyTextStyle,
+        // labelStyle: bodyTextStyle,
 
-        // helperStyle: textSmall,
-        // hintStyle: textSmall,
+        // helperStyle: bodyTextStyle,
 
         enabledBorder: outlineInputBorder,
         focusedBorder: outlineInputBorder.copyWith(
             borderSide: const BorderSide(color: accentPrimary)),
         errorBorder: outlineInputBorder,
         focusedErrorBorder: outlineInputBorder,
-
-        // contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
       ),
 
       /// Button theme
@@ -110,6 +106,11 @@ class GitFavouritesTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+      ),
+
+      listTileTheme: ListTileThemeData(
+        textColor: textPrimary,
+        titleTextStyle: bodyTextStyle,
       ),
     );
 
