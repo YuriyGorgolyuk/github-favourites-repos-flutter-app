@@ -132,7 +132,7 @@ class _HomeViewState extends State<HomeView> {
             } else if (state.status == SearchScreenStatus.error) {
               return ScreenMessage(message: state.message);
             }
-            return const Placeholder();
+            return ScreenMessage(message: state.message);
           },
         ),
       ],
@@ -185,9 +185,13 @@ class _SearchBarState extends State<SearchBar> {
 
     if (controller.text.isNotEmpty && controller.text.length > 2) {
       bloc.add(SearchGithubReposByName(controller.text));
+    } else if (controller.text.isEmpty) {
+      setState(() {
+        helpText = '';
+      });
     } else {
       setState(() {
-        helpText = 'Enter at least 3 characters';
+        helpText = 'Please enter at least 3 characters';
       });
     }
   }
@@ -201,13 +205,14 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
+      height: 80,
       child: TextField(
         controller: controller,
         focusNode: focusNode,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           hintText: hintText,
+          errorText: helpText,
           prefix: Padding(
             padding: const EdgeInsets.only(right: 10, top: 12),
             child: SizedBox(
@@ -236,10 +241,11 @@ class _SearchBarState extends State<SearchBar> {
                         ),
                       ),
                     ),
-                    onPressed: () => setState(() {
-                      controller.clear();
-                      bloc.add(LoadGithubRepos());
-                    }),
+                    onPressed: () {
+                      if (debounce?.isActive ?? false) debounce?.cancel();
+                      setState(() => controller.clear());
+                      bloc.add(const ClearSearchField());
+                    },
                     icon: SvgPicture.asset(
                       SvgIcon.close,
                     ),

@@ -28,3 +28,7 @@ class StarStatusToggled extends GithubReposEvent {
   @override
   List<Object> get props => [repository];
 }
+
+class ClearSearchField extends GithubReposEvent {
+  const ClearSearchField();
+}

@@ -21,6 +21,7 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
     on<LoadGithubRepos>(_onLoadGithubRepos);
     on<SearchGithubReposByName>(_onSearchGithubReposByName);
     on<StarStatusToggled>(_onStarStatusToggled);
+    on<ClearSearchField>(_onClearSearchField);
   }
 
   final UserRepository _userRepository;
@@ -86,13 +87,12 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
       query: event.query,
     ));
 
+    // update list of recent searches
     List<String> recentSearches = [];
-
     recentSearches.addAll(state.user.recentSearches);
     if (!recentSearches.contains(event.query)) {
       recentSearches.add(event.query);
     }
-
     final updatedUser = await _userRepository.updateUser(
         user: state.user.copyWith(recentSearches: recentSearches));
 
@@ -104,8 +104,8 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
       pageNumber: state.currentPage,
     );
 
+    // check if search results contans any starred repos by user
     List<RepositoryEntity> searchWithStarredRepos = [];
-    // check if search results contans any starred repos
     for (var repo in searchResults) {
       if (state.user.favouriteReposIds.contains(repo.id)) {
         searchWithStarredRepos.add(repo.copyWith(isStarred: true));
@@ -177,5 +177,15 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
       message:
           updatedStar ? "Repository is starred" : "Repository is unstarred",
     ));
+  }
+
+  FutureOr<void> _onClearSearchField(
+      ClearSearchField event, Emitter<GithubReposState> emit) {
+    emit(
+      state.copyWith(
+        status: SearchScreenStatus.loadedSearchHistory,
+        query: "",
+      ),
+    );
   }
 }
