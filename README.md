@@ -1,16 +1,14 @@
-# github_favourites
+# Github Favourites
 
-A new Flutter project.
+The project allows you to save your favorite repositories
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone repository
+2. Run: "flutter pub get" to get dependencies
+3. create "dot.env: file it the root project folder
+4. add to the dot.env file GitHub key:
+``` GITHUB_TOKEN = "<Your token Here>" ```
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+How To generate a token: 
+- open your GitHub account settings > Developer Settings > Personal access token > Tokens(classic)
