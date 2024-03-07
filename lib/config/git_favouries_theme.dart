@@ -79,10 +79,6 @@ class GitFavouritesTheme {
         focusColor: accentSecondary,
         disabledBorder: outlineInputBorder,
         hintStyle: bodyTextStyle,
-        // labelStyle: bodyTextStyle,
-
-        // helperStyle: bodyTextStyle,
-
         enabledBorder: outlineInputBorder,
         focusedBorder: outlineInputBorder.copyWith(
             borderSide: const BorderSide(color: accentPrimary)),

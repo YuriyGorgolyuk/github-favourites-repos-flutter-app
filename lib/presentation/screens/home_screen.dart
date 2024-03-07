@@ -1,13 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:github_favourites/config/constants.dart';
 
 import 'package:github_favourites/presentation/bloc/favourites_list_cubit/favourites_list_cubit.dart';
 import 'package:github_favourites/presentation/bloc/github_repos_bloc.dart/github_repos_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:github_favourites/presentation/widgets/search_bar_widget.dart';
 import 'package:github_favourites/presentation/widgets/list_item_card.dart';
 import 'package:github_favourites/presentation/widgets/screen_message.dart';
 
@@ -70,18 +67,19 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SearchBar(
+        const SearchBarWidget(
           key: Key('mainGitSearchBar'),
         ),
         BlocBuilder<GithubReposBloc, GithubReposState>(
             builder: (context, state) {
           if (state.status == SearchScreenStatus.loadedSearchResult) {
-            return SearchTextWidget(text: 'What we have found');
+            return const SearchTextWidget(text: 'What we have found');
           } else if (state.status == SearchScreenStatus.loading) {
-            return Text('');
+            return const SizedBox(height: 16);
           } else {
-            return SearchTextWidget(text: 'Search History');
+            return const SearchTextWidget(text: 'Search History');
           }
         }),
         BlocBuilder<GithubReposBloc, GithubReposState>(
@@ -152,126 +150,12 @@ class SearchTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         text,
         style: theme.textTheme.titleMedium!
             .copyWith(color: theme.colorScheme.primary),
         textAlign: TextAlign.start,
-      ),
-    );
-  }
-}
-
-class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
-
-  @override
-  State<SearchBar> createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
-  Timer? debounce;
-  TextEditingController controller = TextEditingController();
-  var focusNode = FocusNode();
-  String hintText = 'Search';
-  String helpText = '';
-
-  GithubReposBloc get bloc => BlocProvider.of<GithubReposBloc>(context);
-  ThemeData get theme => Theme.of(context);
-
-  void onSearch() {
-    if (debounce?.isActive ?? false) debounce?.cancel();
-
-    if (controller.text.isNotEmpty && controller.text.length > 2) {
-      bloc.add(SearchGithubReposByName(controller.text));
-    } else if (controller.text.isEmpty) {
-      setState(() {
-        helpText = '';
-      });
-    } else {
-      setState(() {
-        helpText = 'Please enter at least 3 characters';
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller.text = bloc.state.query;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        textAlignVertical: TextAlignVertical.center,
-        cursorColor: theme.colorScheme.primary,
-        decoration: InputDecoration(
-          hintText: hintText,
-          errorText: helpText,
-          prefix: Padding(
-            padding: const EdgeInsets.only(right: 10, top: 12),
-            child: SizedBox(
-              width: 24,
-              height: 24,
-              child: SvgPicture.asset(SvgIcon.search),
-            ),
-          ),
-          fillColor: focusNode.hasFocus
-              ? theme.colorScheme.secondaryContainer
-              : theme.colorScheme.background,
-          suffix: controller.text.isNotEmpty
-              ? SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    splashRadius: 40,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        theme.colorScheme.secondaryContainer,
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      if (debounce?.isActive ?? false) debounce?.cancel();
-                      setState(() => controller.clear());
-                      bloc.add(const ClearSearchField());
-                    },
-                    icon: SvgPicture.asset(
-                      SvgIcon.close,
-                    ),
-                  ),
-                )
-              : null,
-        ),
-        onTap: () => setState(() => focusNode.requestFocus()),
-        onChanged: (value) {
-          setState(() {
-            controller.text = value;
-          });
-          if (debounce?.isActive ?? false) debounce?.cancel();
-          debounce = Timer(
-            const Duration(milliseconds: 4000),
-            () => onSearch(),
-          );
-        },
-        onTapOutside: (event) {
-          setState(() {
-            focusNode.unfocus();
-          });
-        },
-        onSubmitted: (value) => onSearch(),
-        textInputAction: TextInputAction.search,
       ),
     );
   }

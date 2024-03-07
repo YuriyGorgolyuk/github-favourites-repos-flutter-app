@@ -14,7 +14,7 @@ class FavouritesListCubit extends Cubit<FavouritesListState> {
   final GithubRepositoryImpl _gitRepository;
 
   void loadFavourites(UserEntity user) async {
-    emit(FavouritesListState(status: FavouritesListStatus.loading));
+    emit(const FavouritesListState(status: FavouritesListStatus.loading));
     List<RepositoryEntity> repos = [];
     if (user.favouriteReposIds.isNotEmpty) {
       for (var id in user.favouriteReposIds) {
