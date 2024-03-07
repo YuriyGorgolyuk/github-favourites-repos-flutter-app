@@ -20,13 +20,23 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       appBar: AppBar(
         title: const Text("Favourites repos list"),
         centerTitle: true,
+        elevation: 1,
+        // can be updated to match with the design file. Looks nicer with tint as for me
+        // surfaceTintColor: Theme.of(context).colorScheme.background,
+        shadowColor: Theme.of(context).colorScheme.secondary,
+        toolbarHeight: 64.0,
+        leadingWidth: 60.0,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0, bottom: 8.0, top: 8),
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+          padding: const EdgeInsets.only(left: 16.0, bottom: 10, top: 10),
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new_rounded),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
         ),
       ),

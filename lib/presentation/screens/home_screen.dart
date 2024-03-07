@@ -21,19 +21,27 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Github repos list"),
         centerTitle: true,
+        elevation: 1,
+        // can be updated to match with the design file. Looks nicer with tint as for me
+        // surfaceTintColor: Theme.of(context).colorScheme.background,
+        shadowColor: Theme.of(context).colorScheme.secondary,
+        toolbarHeight: 64.0,
         actions: [
           Padding(
             padding: const EdgeInsets.only(
               right: Constants.horizontalPadding,
-              bottom: 10.0,
             ),
-            child: IconButton(
-              icon: const Icon(Icons.star_rate_rounded),
-              onPressed: () {
-                favouritesCubit.loadFavourites(bloc.state.user);
+            child: SizedBox(
+              width: 44,
+              height: 44,
+              child: IconButton(
+                icon: const Icon(Icons.star_rate_rounded),
+                onPressed: () {
+                  favouritesCubit.loadFavourites(bloc.state.user);
 
-                Navigator.pushNamed(context, '/favourites-repos');
-              },
+                  Navigator.pushNamed(context, '/favourites-repos');
+                },
+              ),
             ),
           ),
         ],
