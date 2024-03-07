@@ -53,7 +53,7 @@ class _SearchBarState extends State<SearchBarWidget> {
   InputDecoration _inputDecoration(ThemeData theme) {
     return InputDecoration(
       hintText: hintText,
-      errorText: helpText,
+      errorText: helpText == '' ? null : helpText,
       prefixIcon: Padding(
         padding: const EdgeInsets.only(right: 10, left: 16),
         child: SvgPicture.asset(SvgIcon.search, width: 24.0, height: 24.0),
@@ -94,7 +94,6 @@ class _SearchBarState extends State<SearchBarWidget> {
         controller: controller,
         focusNode: focusNode,
         textAlignVertical: TextAlignVertical.center,
-        cursorColor: Colors.green,
         decoration: _inputDecoration(theme),
         onTap: () => focusNode.requestFocus(),
         onChanged: (value) {
