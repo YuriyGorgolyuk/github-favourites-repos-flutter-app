@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github_favourites/config/constants.dart';
 
 import 'package:github_favourites/presentation/bloc/favourites_list_cubit/favourites_list_cubit.dart';
 import 'package:github_favourites/presentation/bloc/github_repos_bloc.dart/github_repos_bloc.dart';
@@ -22,7 +23,10 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0, bottom: 10.0),
+            padding: const EdgeInsets.only(
+              right: Constants.horizontalPadding,
+              bottom: 10.0,
+            ),
             child: IconButton(
               icon: const Icon(Icons.star_rate_rounded),
               onPressed: () {
@@ -47,7 +51,10 @@ class HomeScreen extends StatelessWidget {
           }
         },
         child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: Constants.horizontalPadding,
+            vertical: Constants.verticalPadding,
+          ),
           child: HomeView(),
         ),
       ),
@@ -150,7 +157,7 @@ class SearchTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.only(bottom: 20.0),
       child: Text(
         text,
         style: theme.textTheme.titleMedium!

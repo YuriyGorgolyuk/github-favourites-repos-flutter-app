@@ -1,5 +1,7 @@
 class Constants {
   static const String appName = "Search App";
+  static const double horizontalPadding = 16.0;
+  static const double verticalPadding = 24.0;
 }
 
 class SvgIcon extends Constants {

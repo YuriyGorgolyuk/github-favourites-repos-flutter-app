@@ -30,6 +30,14 @@ class GitFavouritesTheme {
     letterSpacing: 0,
   );
 
+  static ButtonStyle get buttonWithTransparentBG => ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ));
+
   /// Returns the light theme for the app
   static ThemeData get light {
     const outlineInputBorder = OutlineInputBorder(

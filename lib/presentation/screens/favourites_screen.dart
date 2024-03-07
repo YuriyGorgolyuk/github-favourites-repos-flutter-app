@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github_favourites/config/constants.dart';
 import 'package:github_favourites/presentation/bloc/favourites_list_cubit/favourites_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_favourites/presentation/widgets/list_item_card.dart';
@@ -29,37 +30,43 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          BlocBuilder<FavouritesListCubit, FavouritesListState>(
-            builder: (context, state) {
-              if (state.status == FavouritesListStatus.loading) {
-                return const Center(
-                  child: CupertinoActivityIndicator(),
-                );
-              } else if (state.status == FavouritesListStatus.loaded) {
-                return Expanded(
-                  child: Scrollbar(
-                    trackVisibility: true,
-                    thickness: 4,
-                    radius: const Radius.circular(2),
-                    child: ListView.builder(
-                      itemCount: state.favouriteRepos.length,
-                      itemBuilder: (context, index) {
-                        final repo = state.favouriteRepos[index];
-                        return ListItemCard(repo: repo);
-                      },
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Constants.horizontalPadding,
+          vertical: Constants.verticalPadding,
+        ),
+        child: Column(
+          children: [
+            BlocBuilder<FavouritesListCubit, FavouritesListState>(
+              builder: (context, state) {
+                if (state.status == FavouritesListStatus.loading) {
+                  return const Center(
+                    child: CupertinoActivityIndicator(),
+                  );
+                } else if (state.status == FavouritesListStatus.loaded) {
+                  return Expanded(
+                    child: Scrollbar(
+                      trackVisibility: true,
+                      thickness: 4,
+                      radius: const Radius.circular(2),
+                      child: ListView.builder(
+                        itemCount: state.favouriteRepos.length,
+                        itemBuilder: (context, index) {
+                          final repo = state.favouriteRepos[index];
+                          return ListItemCard(repo: repo);
+                        },
+                      ),
                     ),
-                  ),
-                );
-              } else if (state.status == FavouritesListStatus.error) {
-                return ScreenMessage(message: state.message);
-              } else {
-                return const SizedBox();
-              }
-            },
-          ),
-        ],
+                  );
+                } else if (state.status == FavouritesListStatus.error) {
+                  return ScreenMessage(message: state.message);
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
