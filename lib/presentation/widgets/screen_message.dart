@@ -10,6 +10,7 @@ class ScreenMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -21,6 +22,9 @@ class ScreenMessage extends StatelessWidget {
               textAlign: TextAlign.center,
               softWrap: true,
               maxLines: 2,
+              style: theme.textTheme.bodySmall!.copyWith(
+                color: theme.colorScheme.tertiary,
+              ),
             ),
           ),
         ],
