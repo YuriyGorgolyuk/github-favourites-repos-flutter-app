@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:github_favourites/data/github_local_datasource.dart';
 import 'package:github_favourites/data/github_remote_datasource.dart';
+import 'package:github_favourites/data/user_shared_preferences_datasource.dart';
 import 'package:github_favourites/domain/repositories/github_favourites_repository.dart';
 import 'package:github_favourites/domain/repositories/user_repository.dart';
 import 'package:github_favourites/presentation/app.dart';
@@ -31,6 +32,8 @@ void main() {
     GithubLocalDataSource githubLocalDataSource = GithubLocalDataSource();
     GithubRemoteDataSource githubClient = GithubClient();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    UserSharedPreferencesDatasource userSharedPreferencesDatasource =
+        UserSharedPreferencesDatasource(prefs);
 
     GithubRepositoryImpl githubRepository = GithubRepositoryImpl(
       remoteDataSource: githubClient,
@@ -39,7 +42,7 @@ void main() {
 
     UserRepository userRepository = UserRepository(
       localDataSource: githubLocalDataSource,
-      sharedPreferences: prefs,
+      preferences: userSharedPreferencesDatasource,
     );
 
     return GitFavouritesApp(

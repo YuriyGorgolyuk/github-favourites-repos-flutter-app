@@ -18,6 +18,12 @@ class HomeScreen extends StatelessWidget {
     final bloc = BlocProvider.of<GithubReposBloc>(context);
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          bloc.add(const ClearSearchHistory());
+        },
+        child: const Icon(Icons.clear_all_rounded),
+      ),
       appBar: AppBar(
         title: const Text("Github repos list"),
         centerTitle: true,
@@ -142,10 +148,9 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               );
-            } else if (state.status == SearchScreenStatus.error) {
+            } else {
               return ScreenMessage(message: state.message);
             }
-            return ScreenMessage(message: state.message);
           },
         ),
       ],

@@ -22,6 +22,7 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
     on<SearchGithubReposByName>(_onSearchGithubReposByName);
     on<StarStatusToggled>(_onStarStatusToggled);
     on<ClearSearchField>(_onClearSearchField);
+    on<ClearSearchHistory>(_onClearSearchHistory);
   }
 
   final UserRepository _userRepository;
@@ -131,14 +132,11 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
 
   FutureOr<void> _onStarStatusToggled(
       StarStatusToggled event, Emitter<GithubReposState> emit) async {
-    List<int> favouriteReposIds = [];
-    List<String> favouriteReposNames = [];
-    List<RepositoryEntity> searchResults = [];
+    List<int> favouriteReposIds = List.from(state.user.favouriteReposIds);
+    List<String> favouriteReposNames =
+        List.from(state.user.favouriteReposNames);
+    List<RepositoryEntity> searchResults = List.from(state.searchResults);
     bool updatedStar = !event.repository.isStarred!;
-
-    favouriteReposIds.addAll(state.user.favouriteReposIds);
-    favouriteReposNames.addAll(state.user.favouriteReposNames);
-    searchResults.addAll(state.searchResults);
 
     int index =
         searchResults.indexWhere((repo) => repo.id == event.repository.id);
@@ -152,14 +150,13 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
     /// TODO: update data persisting solution to handle this better.
     /// ex. Store data in JSON String in SharedPreferences or use Hive.
     if (state.user.favouriteReposIds.contains(event.repository.id)) {
-      favouriteReposIds = state.user.favouriteReposIds;
       favouriteReposIds.remove(event.repository.id);
-      favouriteReposNames = state.user.favouriteReposNames;
       favouriteReposNames.remove(event.repository.name);
     } else {
       favouriteReposIds.add(event.repository.id!);
       favouriteReposNames.add(event.repository.name!);
     }
+
     final updatedUser = await _userRepository.updateUser(
       user: state.user.copyWith(
         favouriteReposIds: favouriteReposIds,
@@ -187,6 +184,21 @@ class GithubReposBloc extends Bloc<GithubReposEvent, GithubReposState> {
       state.copyWith(
         status: SearchScreenStatus.loadedSearchHistory,
         query: "",
+      ),
+    );
+  }
+
+  FutureOr<void> _onClearSearchHistory(
+      ClearSearchHistory event, Emitter<GithubReposState> emit) async {
+    final user = await _userRepository.updateUser(
+      user: state.user.copyWith(recentSearches: []),
+    );
+
+    emit(
+      state.copyWith(
+        user: user,
+        status: SearchScreenStatus.error,
+        message: "You have empty history. \n Click on search to start journey!",
       ),
     );
   }

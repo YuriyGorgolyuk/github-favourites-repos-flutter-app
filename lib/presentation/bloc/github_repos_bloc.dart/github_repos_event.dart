@@ -32,3 +32,7 @@ class StarStatusToggled extends GithubReposEvent {
 class ClearSearchField extends GithubReposEvent {
   const ClearSearchField();
 }
+
+class ClearSearchHistory extends GithubReposEvent {
+  const ClearSearchHistory();
+}
